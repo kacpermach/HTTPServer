@@ -20,3 +20,12 @@
 
 #define PORT 8080
 #define LISTEN_BACKLOG 50
+
+extern SOCKET server_socket_fd, client_socket_fd;
+extern struct sockaddr_in server_address, client_address;
+extern socklen_t client_address_len;
+extern int socket_opt;
+extern char message_buffer[2048];
+extern ssize_t message_size;
+
+void parse_message(char *message_buffer);
