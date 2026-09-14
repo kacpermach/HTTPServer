@@ -1,7 +1,6 @@
 #include "HTTPServer.h" // Pamiętaj, aby plik nagłówkowy też był platform-agnostic
 
 int main() {
-    // 1. Inicjalizacja Winsock (tylko na Windows)
 #ifdef _WIN32
     WSADATA wsaData;
     if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
@@ -10,7 +9,6 @@ int main() {
     }
 #endif
 
-    // Używamy typu SOCKET (na Linuxie to zwykły int)
     SOCKET server_socket_fd, client_socket_fd;
     struct sockaddr_in server_address, client_address;
     socklen_t client_address_len;
@@ -21,7 +19,6 @@ int main() {
         perror("Socket initialization error");
     }
 
-    // Rzutowanie (const char*) jest wymagane przez Windows API, na Linuxie zadziała bez problemu
     if(setsockopt(server_socket_fd, SOL_SOCKET, SO_REUSEADDR, (const char*)&socket_opt, sizeof(socket_opt)) < 0){
         perror("Socket option initialization error");
     }
@@ -44,17 +41,14 @@ int main() {
     if(client_socket_fd == INVALID_SOCKET){
         perror("Client socket error");
     }
-    
-    // Przykładowa pętla, uważaj, żeby nie zablokowała konsoli
+
     if(client_socket_fd != INVALID_SOCKET){
-        printf("Klient podłączony! FD: %d\n", (int)client_socket_fd);
+        printf("Client connected FD: %d\n", (int)client_socket_fd);
     }
 
-    // Zamykanie gniazd (makro dopasowane do systemu)
     CLOSE_SOCKET(client_socket_fd);
     CLOSE_SOCKET(server_socket_fd);
 
-    // Czyszczenie Winsock (tylko na Windows)
 #ifdef _WIN32
     WSACleanup();
 #endif
