@@ -1,20 +1,45 @@
 #include "HTTPServer.h"
 
+int HTTP_method = 0;
+
 void parse_message(char *message_buffer){
     printf("Function\n");
     char method[16];
     char path[1024];
     char protocol[16];
-    sscanf(message_buffer, "%s %c %s\n", method, path, protocol);
+    sscanf(message_buffer, "%s %s %s\n", method, path, protocol);
 
-    char file_path[2048];
-    if(strcmp(path, "/")==0){
-        strcpy(file_path, "index.html");
-    } else{
-        snprintf(file_path, sizeof(file_path), ".%s", path);
+    if (strcmp(method,"GET") == 0){
+        HTTP_method = GET;
     }
-    open_file_path(file_path);
+    else if (strcmp(method,"POST") == 0)
+    {
+        HTTP_method = POST;
+    }
     
+    switch (HTTP_method)
+    {
+    case GET:{
+        char file_path[2048];
+        if(strcmp(path, "/")==0){
+            strcpy(file_path, "index.html");
+        } else{
+            snprintf(file_path, sizeof(file_path), ".%s", path);
+            }
+        open_file_path(file_path);
+        }
+
+        break;
+    
+    case POST:
+        printf("POST\n");
+        break;
+
+    default:
+        break;
+    }
+
+ 
 }
 
 
