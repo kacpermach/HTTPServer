@@ -29,3 +29,4 @@ extern char message_buffer[2048];
 extern ssize_t message_size;
 
 void parse_message(char *message_buffer);
+void open_file_path(char *file_path);
