@@ -33,3 +33,4 @@ extern int HTTP_method;
 
 void parse_message(char *message_buffer);
 void open_file_path(char *file_path);
+bool recognise_file_path(const char *file_path);
