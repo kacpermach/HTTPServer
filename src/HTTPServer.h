@@ -11,6 +11,7 @@
     #include <unistd.h>
     #include <sys/socket.h>
     #include <netinet/in.h>
+    #include <stdbool.h>
 
     #define SOCKET int
     #define INVALID_SOCKET -1
